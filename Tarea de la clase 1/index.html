@@ -3,50 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles-high-contrast.css" media="screen and (prefers-color-scheme: dark)">
-    <title>Formulario de Datos Personales</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Formulario de Registro</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Formulario de Datos Personales</h1>
-        <form id="personal-form" onsubmit="return validateEmail()">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+        <h1 class="mb-4">Formulario de Registro</h1>
+        <form id="personal-form" novalidate onsubmit="return validateEmail()">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="invalid-feedback">Por favor, ingrese su nombre.</div>
+            </div>
 
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                <div class="invalid-feedback">Por favor, ingrese su apellido.</div>
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <span id="email-error" class="error-message"></span> <!-- Mensaje de error -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <span id="email-error" class="text-danger"></span>
+                <div class="invalid-feedback">Por favor, ingrese un email válido.</div>
+            </div>
 
-            <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
-            <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
+            <div class="form-group">
+                <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" class="form-control" id="fecha-nacimiento" name="fecha-nacimiento" required>
+                <div class="invalid-feedback">Por favor, seleccione su fecha de nacimiento.</div>
+            </div>
 
-            <label for="pais">País de Residencia:</label>
-            <select id="pais" name="pais" required>
-                <option value="">Seleccione un país</option>
-                <option value="argentina">Argentina</option>
-                <option value="chile">Chile</option>
-                <option value="mexico">México</option>
-                <option value="españa">España</option>
-                <option value="colombia">Colombia</option>
-            </select>
+            <div class="form-group">
+                <label for="pais">País de Residencia:</label>
+                <select class="form-control" id="pais" name="pais" required>
+                    <option value="">Seleccione un país</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="chile">Chile</option>
+                    <option value="mexico">México</option>
+                    <option value="españa">España</option>
+                    <option value="colombia">Colombia</option>
+                </select>
+                <div class="invalid-feedback">Por favor, seleccione su país de residencia.</div>
+            </div>
 
-            <button type="submit">Enviar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
 
     <script>
+        // Validación del formulario
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var form = document.getElementById('personal-form');
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            }, false);
+        })();
+
+        // Validación de email
         function validateEmail() {
             const emailInput = document.getElementById('email');
             const emailError = document.getElementById('email-error');
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar el formato del email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (!emailPattern.test(emailInput.value)) {
                 emailError.textContent = 'Por favor, introduce un email válido.';
-                emailError.style.color = 'red';
                 return false; // Evitar el envío del formulario
             }
 
@@ -54,5 +88,10 @@
             return true; // Permitir el envío del formulario
         }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
